@@ -76,10 +76,11 @@ def nearest_neighbor_validation(k, data_lsi, data_cat, validation):
     statistics = [[] for i in range(4)]
     mean_statistics = [0 for i in range(4)]
     for train_index, test_index in validation.split(data_lsi, data_cat):
+        print "iteration"
         X_train, X_test = data_lsi[train_index], data_lsi[test_index]
         y_train, y_test = data_cat[train_index], data_cat[test_index]
         cat_prediction = find_k_nearest(k, X_train, X_test, y_train)
-        statistics[0].apend(accuracy_score(y_test, cat_prediction))
+        statistics[0].append(accuracy_score(y_test, cat_prediction))
         statistics[1].append(recall_score(y_test, cat_prediction, average='macro'))
         statistics[2].append(f1_score(y_test, cat_prediction, average='macro'))
         statistics[3].append(precision_score(y_test, cat_prediction, average='macro'))
@@ -119,7 +120,7 @@ def main():
 
     #start computing statistics
     #special for NB that needs a scaler for positive values
-    '''scaler = MinMaxScaler(feature_range=(0, 150))
+    scaler = MinMaxScaler(feature_range=(0, 150))
     scaled_data = scaler.fit_transform(data_lsi)
     statistics = get_statistics(algorithms[0], scaled_data, data_cat, validation)
     for j in range(4):
@@ -130,10 +131,18 @@ def main():
         for j in range(4):
             stat_array[j].append(statistics[j])
 
-    print stat_array'''
+    print stat_array
     k = 3
     statistics = nearest_neighbor_validation(k, data_lsi, data_cat, validation)
+    for j in range(4):
+        stat_array[j].append(statistics[j])
     print statistics
 
+    train_data_frame = pd.DataFrame(np.array(stat_array))
+    df_matrix.columns = ['Naive Bayes', 'Random Forest', 'SVM', 'KNN']
+    df_matrix.index = ['Accuracy', 'Precision', 'Recall', 'F-Measure']
+    df_matrix.to_csv("EvaluationMetric_10fold.csv", sep='\t')
+
+    #accur_classifirer = svm.SVC(kernel='rbf', C=10, gamma=1, probability=True)
 if __name__ == "__main__":
     main()
