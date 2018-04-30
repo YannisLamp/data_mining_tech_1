@@ -6,7 +6,6 @@ import matplotlib.pyplot as plot
 
 
 def make_cloud(category_content_txt, categories, wordcloud):
-    print category_content_txt
     for i,txt in enumerate(category_content_txt):
         print("wordcloud for:",categories[i])
         wordcloud.generate(txt)
@@ -20,7 +19,7 @@ def make_cloud(category_content_txt, categories, wordcloud):
 def main(argv):
 
     category_content_txt = []
-    data = pd.read_csv('datasets/train_set.csv', sep="\t")
+    data = pd.read_csv('../datasets/train_set.csv', sep="\t")
     all_categories = set(data['Category'])
     categories = ["Politics", "Film", "Football", "Business", "Technology"]
 
@@ -28,7 +27,6 @@ def main(argv):
     font = '/usr/share/fonts/truetype/ubuntu-font-family/Ubuntu-B.ttf'
 
     for cat in categories:
-        #cat_rows = data.lookup()
         cat_rows = data.loc[data['Category'] == cat]
         cat_content = cat_rows.loc[:, "Content"]
         cat_content_txt = cat_content.to_string()
@@ -38,8 +36,8 @@ def main(argv):
         max_words=50,
         stopwords=stop_words,
         background_color='white',
-        width=1200,
-        height=1000,
+        width=1500,
+        height=1500,
         font_path=font
     )
 
