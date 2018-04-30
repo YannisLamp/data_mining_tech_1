@@ -4,9 +4,8 @@ from sklearn.metrics import classification_report
 from sklearn import preprocessing, svm
 from sklearn.feature_extraction.text import TfidfTransformer
 from sklearn.feature_extraction.text import CountVectorizer
-from sklearn.grid_search import GridSearchCV
 from sklearn.decomposition import TruncatedSVD
-from sklearn.model_selection import KFold, cross_val_predict
+from sklearn.model_selection import KFold, cross_val_predict, GridSearchCV
 from sklearn.naive_bayes import MultinomialNB
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.ensemble import RandomForestClassifier
@@ -79,7 +78,7 @@ def nearest_neighbor_validation(k, data_lsi, data_cat, validation):
         X_train, X_test = data_lsi[train_index], data_lsi[test_index]
         y_train, y_test = data_cat[train_index], data_cat[test_index]
         cat_prediction = find_k_nearest(k, X_train, X_test, y_train)
-        statistics[0].apend(accuracy_score(y_test, cat_prediction))
+        statistics[0].append(accuracy_score(y_test, cat_prediction)) 
         statistics[1].append(recall_score(y_test, cat_prediction, average='macro'))
         statistics[2].append(f1_score(y_test, cat_prediction, average='macro'))
         statistics[3].append(precision_score(y_test, cat_prediction, average='macro'))
