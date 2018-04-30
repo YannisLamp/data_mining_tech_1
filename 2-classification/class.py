@@ -11,7 +11,10 @@ from sklearn.naive_bayes import MultinomialNB
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import recall_score, precision_score, accuracy_score, f1_score
+from sklearn.neighbors import DistanceMetric
 from sklearn import svm
+from scipy.spatial.distance import euclidean
+from operator import itemgetter
 import pandas as pd
 import numpy as np
 
@@ -49,13 +52,42 @@ def get_statistics(classifier, data_lsi, data_cat, validation):
     return statistics
 
 def find_k_nearest(k, X_train, X_test, y_train):
-    pass
+    #distance = euclidean
+    predictions = []
+    for xts in X_test:
+        dist_results = []
+        #print "X_train", X_train[0]
+        for j, xtr in enumerate(X_train):
+            dist = euclidean(xts, xtr)
+            dist_results.append((dist, y_train[j]))
+        dist_results.sort(key=itemgetter(0))
+        dist_results = dist_results[:k]
+        #print dist_results
+        #majority voting
+        cat_no = [0 for i in range(5)]
+        for x, i in dist_results:
+            cat_no[i]+=1
+        #print cat_no
+        predictions.append(cat_no.index(max(cat_no)))
+        #print predictions
+    return predictions
 
 def nearest_neighbor_validation(k, data_lsi, data_cat, validation):
-    for train_index, test_index in validation.split(X):
-        X_train, X_test = X[train_index], X[test_index]
-        y_train, y_test = y[train_index], y[test_index]
-        cat_prediction = find_k_nearest()
+    statistics = [[] for i in range(4)]
+    mean_statistics = [0 for i in range(4)]
+    for train_index, test_index in validation.split(data_lsi, data_cat):
+        X_train, X_test = data_lsi[train_index], data_lsi[test_index]
+        y_train, y_test = data_cat[train_index], data_cat[test_index]
+        cat_prediction = find_k_nearest(k, X_train, X_test, y_train)
+        statistics[0].apend(accuracy_score(y_test, cat_prediction))
+        statistics[1].append(recall_score(y_test, cat_prediction, average='macro'))
+        statistics[2].append(f1_score(y_test, cat_prediction, average='macro'))
+        statistics[3].append(precision_score(y_test, cat_prediction, average='macro'))
+    #compute mean statistics from all individual
+    mean_statistics = [np.mean(i) for i in statistics]
+    #print mean_statistics
+    return mean_statistics
+
 
 def main():
     #read both datasets and transform them
@@ -99,6 +131,9 @@ def main():
             stat_array[j].append(statistics[j])
 
     print stat_array'''
+    k = 3
+    statistics = nearest_neighbor_validation(k, data_lsi, data_cat, validation)
+    print statistics
 
 if __name__ == "__main__":
     main()
