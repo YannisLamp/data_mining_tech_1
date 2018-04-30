@@ -4,9 +4,8 @@ from sklearn.metrics import classification_report
 from sklearn import preprocessing, svm
 from sklearn.feature_extraction.text import TfidfTransformer
 from sklearn.feature_extraction.text import CountVectorizer
-from sklearn.grid_search import GridSearchCV
 from sklearn.decomposition import TruncatedSVD
-from sklearn.model_selection import KFold, cross_val_predict
+from sklearn.model_selection import KFold, cross_val_predict, GridSearchCV
 from sklearn.naive_bayes import MultinomialNB
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.ensemble import RandomForestClassifier
