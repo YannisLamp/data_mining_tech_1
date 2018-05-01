@@ -105,7 +105,7 @@ def main():
     content = list(train_data.Content)
     test_titles = list(test_data.Title)
     test_content = list(test_data.Content)
-    data_lsi = make_lsi(content, titles, 50)
+    data_lsi = make_lsi(content, titles, 200)
     test_data_lsi = make_lsi(test_content, test_titles, 50)
 
     #assign to each category an int and parse all dataset categories as ints
@@ -120,10 +120,10 @@ def main():
     algorithms = [
     MultinomialNB(),
     RandomForestClassifier(n_estimators=6),
-    #svm.SVC(kernel='rbf', C=10, gamma=1, probability=True)] #put parameters here
-    svm.SVC()]
+    svm.SVC(kernel='rbf', C=10, gamma=1, probability=True)] #put parameters here
+    #svm.SVC()]
 
-    find_parameters(svm.SVC(), data_lsi, data_cat)
+    #find_parameters(svm.SVC(), data_lsi, data_cat)
     
     validation = KFold(n_splits=10)
     stat_array = [[] for i in range(4)]
