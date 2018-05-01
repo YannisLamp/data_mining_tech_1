@@ -1,0 +1,76 @@
+\documentclass{article}
+\usepackage{graphicx}
+\usepackage[english,greek]{babel}
+\usepackage[utf8x]{inputenc}
+\usepackage{amsmath}
+\usepackage{relsize}
+\usepackage{enumerate}
+\usepackage[parfill]{parskip}
+\usepackage{graphicx}
+\usepackage{listings}
+
+\makeatletter
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{#1}}
+\makeatother
+
+\begin{document}
+
+\title{\vspace{-3.5cm}\textbf{Τεχνικές Εξόρυξης Δεδομένων \\ \textlatin{Project \#}1}}
+\author{Λάμπρου Ιωάννης \\1115201400088\\\\ Στεφανίδης - Βοζίκης Κωνσταντίνος \\1115201400192}
+
+\maketitle
+\section{\textlatin{WordCloud}}
+Για την δημιουργία των \textlatin{wordclouds} κάθε κατηγορίας χρησιμοποιήθηκε το κείμενο από όλα τα άρθρα
+που υπήρχαν στο \textlatin{train\_set.csv}. Τα \textlatin{wordclouds} που δημιουργήθηκαν ανά κατηγορία είναι: \\
+\subsection*{\textlatin{Politics}}
+\includegraphics[scale=0.6]{Poli}
+\subsection*{\textlatin{Film}}
+\includegraphics[scale=0.6]{Film}
+\subsection*{\textlatin{Football}}
+\includegraphics[scale=0.6]{Foot}
+\subsection*{\textlatin{Business}}
+\includegraphics[scale=0.6]{Busi}
+\subsection*{\textlatin{Technology}}
+\includegraphics[scale=0.6]{Techno}
+
+Αξίζει να σημειωθεί πως για να δημιουργηθούν αυτά τα \textlatin{wordclouds}, θεωρήθηκαν ως \textlatin{stopwords} 
+τα \textlatin{english stopwords} της βιβλιοθήκης \textlatin{sklearn}
+στις οποίες προστέθηκαν οι λέξεις \textlatin{'say', 'said', 'th', 'it,} και \textlatin{'ha'}, τις οποίες κρίναμε ως επιπλέον 
+\textlatin{stopwords}, μετά από εμφάνισή τους στα \textlatin{wordclouds} αυτά. 
+
+\section{Υλοποίηση Κατηγοριοποίησης \textlatin{(Classification)}}
+Για την κατηγοριοποίηση δοκιμάστηκαν όλες οι ζητούμενες μέθοδοι κατηγοριοποίησης, δηλαδή οι 
+\textlatin{Support Vector Machines (SVM), Random Forests, Multinomial Naive Bayes}, καθώς και 
+έγινε δική μας υλοποίηση της μεθόδου \textlatin{K-Nearest Neighbor}.\\\\
+Ακόμα, για την αξιολόγηση της απόδοσης όλων αυτών των μεθόδων χρησιμοποιήθηκε
+\textlatin{10-fold Cross Validation} για όλες τις ζητούμενες μετρικές της εκφώνησης
+\textlatin{(Precision, Recall, F-Measure, Accuracy)} που παρέχει η βιβλιοθήκη \textlatin{scikit}.\\
+Όπως ζητήθηκε, για την προεπεξεργασία των δεδομένων χρησιμοποιήθηκε η τεχνική 
+\textlatin{Latent Semantic Indexing (LSI)}. Κρατώντας τους παραπάνω \textlatin{classifiers} 
+(\textlatin{SVM, Random Forests, Multinomial Naive Bayes, KNN}) σταθερούς, με το 
+\textlatin{component number} να παίρνει τιμές 50,100,200, και με \textlatin{10-fold Cross Validation}
+παίρνουμε τις τιμές για \textlatin{Accuracy}:\\
+
+
+
+
+Ακόμα, για το \textlatin{Classification}, η πληροφορία του τίτλου και η πληροφορία που παίρνουμε από το κείμενο
+έχουν ίδιο βάρος, 50-50.\\\\
+
+Επίσης, όπως προαναφέρθηκε, χρησιμοποιήθηκε δική μας υλοποίηση για την μέθοδο \textlatin{K-Nearest Neighbors},
+\textlatin{(nearest\_neighbor\_validation()} η οποία καλεί την\\ \textlatin{find\_k\_nearest()} στον κώδικά μας)
+ενώ και η τελική επιλογή για \textlatin{predicted label} έγινε με \textlatin{majority voting}.\\
+
+Τέλος, στον κώδικά μας τρέχουμε την μέθοδο \textlatin{Support Vector Machines} χωρίς παραμέτρους, αλλά
+και με τις βέλτιστες παραμέτρους \textlatin{kernel='rbf', C=10, gamma=1} τις οποίες και βρίκαμε με τη χρήση
+της \textlatin{GridSearchCV()}. (μέσω της \textlatin{find\_parameters()} στον κώδικά μας) 
+
+
+
+
+
+
+\end{document}
