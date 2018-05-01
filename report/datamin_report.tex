@@ -73,8 +73,8 @@
 \end{tabular}
 
 Όπως παρατηρούμε, σχεδόν σε όλους τους αλγορίθμους, ο αριθμός \textlatin{components} 100 είναι καλύτερος από 
-50, (ειδικά στην περίπτωση του \textlatin{Support Vector Machines} όπου βλέπουμε τεράστια βελτίωση στο \textlatin{Accuracy}.\\
-Όσο αυξάνουμε τα \textlatin{components} από τον αριθμό 100 και μετά, παρατηρού 
+50. Όσο όμως αυξάνουμε τον αριθμό των \textlatin{components} από 100 και μετά, παρατηρούμε μια πτώση στο 
+\textlatin{Accuracy}.\\\\
 
 Ακόμα, για το \textlatin{Classification}, η πληροφορία του τίτλου και η πληροφορία που παίρνουμε από το κείμενο
 έχουν ίδιο βάρος, 50-50.\\\\
@@ -84,12 +84,14 @@
 ενώ και η τελική επιλογή για \textlatin{predicted label} έγινε με \textlatin{majority voting}.\\
 
 Τέλος, στον κώδικά μας τρέχουμε την μέθοδο \textlatin{Support Vector Machines} χωρίς παραμέτρους, ή να δοκιμάσουμε
-τυχαίες τιμές παραμέτρων, με το καλύτερο αποτέτεσμα να παραμένει 
-και με τις βέλτιστες παραμέτρους \textlatin{kernel='rbf', C=10, gamma=1} τις οποίες και βρίκαμε με τη χρήση
-της \textlatin{GridSearchCV()}. (μέσω της \textlatin{find\_parameters()} στον κώδικά μας) 
-
+τυχαίες τιμές παραμέτρων, με το καλύτερο αποτέτεσμα να παραμένει χειρότερο από αυτό των 
+\textlatin{Support Vector Machines} χωρίς παραμέτρους. Τελικά, για το τρίτο ερώτημα, βρήκαμε τις βέλτιστες παραμέτρους. 
 
 \section{\textlatin{Beat the Benchmark}}
+Για το ερώτημα αυτό βρήκαμε τις βέλτιστες παραμέτρους \textlatin{kernel='rbf', C=10, gamma=1} για τον αλγόριθμο \textlatin{Support Vector Machines} 
+με τη χρήση της \textlatin{GridSearchCV()}. (μέσω της \textlatin{find\_parameters()} στον κώδικά μας). Η προσθήκη των παραμέτρων αυτών,
+σε συνδυασμό με της εφαρμογής 100 \textlatin{component number} για το \textlatin{LSI}, βλέπουμε πως αποφέρει πολύ καλυτερα αποτελέσματα από όλους τους 
+υπόλοιπους αλγορίθμους που έχουμε δοκιμάσει ως τώρα. 
 
 
 
