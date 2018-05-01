@@ -22,8 +22,12 @@ def main(argv):
     data = pd.read_csv('../datasets/train_set.csv', sep="\t")
     all_categories = set(data['Category'])
     categories = ["Politics", "Film", "Football", "Business", "Technology"]
-
+    
+    # Get stopwords from sklearn, adding some that we found
+    manual_stop_words = ['say', 'said', 'th', 'it', 'ha'] 
     stop_words = ENGLISH_STOP_WORDS
+    stop_words = stop_words.union(manual_stop_words)
+
     font = '/usr/share/fonts/truetype/ubuntu-font-family/Ubuntu-B.ttf'
 
     for cat in categories:

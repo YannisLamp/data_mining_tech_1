@@ -120,8 +120,8 @@ def main():
     algorithms = [
     MultinomialNB(),
     RandomForestClassifier(n_estimators=6),
-    #svm.SVC(kernel='rbf', C=10, gamma=1, probability=True)] #put parameters here
-    svm.SVC()]
+    svm.SVC(kernel='rbf', C=10, gamma=1, probability=True)] #put parameters here
+    #svm.SVC()]
 
 
     #find_parameters(svm.SVC(), data_lsi, data_cat)
