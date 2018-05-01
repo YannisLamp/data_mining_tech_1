@@ -105,8 +105,8 @@ def main():
     content = list(train_data.Content)
     test_titles = list(test_data.Title)
     test_content = list(test_data.Content)
-    data_lsi = make_lsi(content, titles, 50)
-    test_data_lsi = make_lsi(test_content, test_titles, 50)
+    data_lsi = make_lsi(content, titles, 100)
+    test_data_lsi = make_lsi(test_content, test_titles, 100)
 
     #assign to each category an int and parse all dataset categories as ints
     categories = ["Politics", "Film", "Football", "Business", "Technology"]
@@ -146,7 +146,7 @@ def main():
     statistics = nearest_neighbor_validation(k, data_lsi, data_cat, validation)
     for j in range(4):
         stat_array[j].append(statistics[j])
-    print statistics
+    #print statistics
 
     my_method = svm.SVC(kernel='rbf', C=10, gamma=1, probability=True)
     #get statistics for my method
@@ -154,11 +154,9 @@ def main():
     for j in range(4):
         stat_array[j].append(statistics[j])
 
-
     my_method.fit(data_lsi, data_cat)
     my_predict = my_method.predict(test_data_lsi)
-    predictions = [[test_ids[i], categories[mypredict[i]]] for i in range(len(test_ids))]
-
+    predictions = [[test_ids[i], categories[my_predict[i]]] for i in range(len(test_ids))]
 
     train_data_frame = pd.DataFrame(np.array(stat_array))
     train_data_frame.columns = ['Naive Bayes', 'Random Forest', 'SVM', 'KNN', 'My Method']
@@ -167,8 +165,7 @@ def main():
 
     test_data_frame = pd.DataFrame(np.array(predictions))
     test_data_frame.columns = ['ID', 'Predicted_Category']
-    test_data_frame.to_csv("testSet_categories.csv", sep='\t')
+    test_data_frame.to_csv("testSet_categories.csv", sep='\t', index=False)
 
-    #accur_classifirer = svm.SVC(kernel='rbf', C=10, gamma=1, probability=True)
 if __name__ == "__main__":
     main()
