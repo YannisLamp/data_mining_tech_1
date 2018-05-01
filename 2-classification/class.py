@@ -138,9 +138,9 @@ def main():
     print statistics
 
     train_data_frame = pd.DataFrame(np.array(stat_array))
-    df_matrix.columns = ['Naive Bayes', 'Random Forest', 'SVM', 'KNN']
-    df_matrix.index = ['Accuracy', 'Precision', 'Recall', 'F-Measure']
-    df_matrix.to_csv("EvaluationMetric_10fold.csv", sep='\t')
+    train_data_frame.columns = ['Naive Bayes', 'Random Forest', 'SVM', 'KNN']
+    train_data_frame.index = ['Accuracy', 'Precision', 'Recall', 'F-Measure']
+    train_data_frame.to_csv("EvaluationMetric_10fold.csv", sep='\t')
 
     #accur_classifirer = svm.SVC(kernel='rbf', C=10, gamma=1, probability=True)
 if __name__ == "__main__":
