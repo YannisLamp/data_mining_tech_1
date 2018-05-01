@@ -44,18 +44,37 @@
 \section{Υλοποίηση Κατηγοριοποίησης \textlatin{(Classification)}}
 Για την κατηγοριοποίηση δοκιμάστηκαν όλες οι ζητούμενες μέθοδοι κατηγοριοποίησης, δηλαδή οι 
 \textlatin{Support Vector Machines (SVM), Random Forests, Multinomial Naive Bayes}, καθώς και 
-έγινε δική μας υλοποίηση της μεθόδου \textlatin{K-Nearest Neighbor}.\\\\
+έγινε δική μας υλοποίηση της μεθόδου \textlatin{K-Nearest Neighbors}.\\\\
 Ακόμα, για την αξιολόγηση της απόδοσης όλων αυτών των μεθόδων χρησιμοποιήθηκε
 \textlatin{10-fold Cross Validation} για όλες τις ζητούμενες μετρικές της εκφώνησης
 \textlatin{(Precision, Recall, F-Measure, Accuracy)} που παρέχει η βιβλιοθήκη \textlatin{scikit}.\\
 Όπως ζητήθηκε, για την προεπεξεργασία των δεδομένων χρησιμοποιήθηκε η τεχνική 
 \textlatin{Latent Semantic Indexing (LSI)}. Κρατώντας τους παραπάνω \textlatin{classifiers} 
-(\textlatin{SVM, Random Forests, Multinomial Naive Bayes, KNN}) σταθερούς, με το 
+(\textlatin{SVM, Random Forests, Multinomial Naive Bayes, KNN}) συν τον βέλτιστο αλγόριθμο \textlatin{SVM} 
+που επιλέξαμε σταθερούς, με το 
 \textlatin{component number} να παίρνει τιμές 50,100,200, και με \textlatin{10-fold Cross Validation}
-παίρνουμε τις τιμές για \textlatin{Accuracy}:\\
+παίρνουμε τις τιμές για \textlatin{Accuracy}:\\\\
 
+\renewcommand{\arraystretch}{2.5}
+\begin{tabular}{ c c|c|c|}
+\hline  
+ Μέθοδοι & 50 & 100 & 200\\
+\hline 
+\textlatin{Multinomial Naive Bayes} & 0.9310288602641448 & 0.9413011576716126	 & 0.9466818848850481\\
+\hline 
+\textlatin{Random Forests} & 0.9157019403228437 & 0.904695907386271 & 0.8894505136148704\\
+\hline
+\textlatin{Support Vector Machines} & 0.8835806293820316 & 0.964699168433067 & 0.9656774824718735\\
+\hline
+\textlatin{K-Nearest Neighbors} & 0.904614831330411 & 0.9038795401455294 & 0.8915692460689411\\
+\hline
+\textlatin{Support Vector Machines} (βέλτιστο) & 0.9624979618457525 & 0.9660851133213761 & 0.9656774824718735\\
+\hline\\
+\end{tabular}
 
-
+Όπως παρατηρούμε, σχεδόν σε όλους τους αλγορίθμους, ο αριθμός \textlatin{components} 100 είναι καλύτερος από 
+50. Όσο όμως αυξάνουμε τον αριθμό των \textlatin{components} από 100 και μετά, παρατηρούμε μια πτώση στο 
+\textlatin{Accuracy}.\\\\
 
 Ακόμα, για το \textlatin{Classification}, η πληροφορία του τίτλου και η πληροφορία που παίρνουμε από το κείμενο
 έχουν ίδιο βάρος, 50-50.\\\\
@@ -64,12 +83,15 @@
 \textlatin{(nearest\_neighbor\_validation()} η οποία καλεί την\\ \textlatin{find\_k\_nearest()} στον κώδικά μας)
 ενώ και η τελική επιλογή για \textlatin{predicted label} έγινε με \textlatin{majority voting}.\\
 
-Τέλος, στον κώδικά μας τρέχουμε την μέθοδο \textlatin{Support Vector Machines} χωρίς παραμέτρους, αλλά
-και με τις βέλτιστες παραμέτρους \textlatin{kernel='rbf', C=10, gamma=1} τις οποίες και βρίκαμε με τη χρήση
-της \textlatin{GridSearchCV()}. (μέσω της \textlatin{find\_parameters()} στον κώδικά μας) 
+Τέλος, στον κώδικά μας τρέχουμε την μέθοδο \textlatin{Support Vector Machines} χωρίς παραμέτρους, ή να δοκιμάσουμε
+τυχαίες τιμές παραμέτρων, με το καλύτερο αποτέτεσμα να παραμένει χειρότερο από αυτό των 
+\textlatin{Support Vector Machines} χωρίς παραμέτρους. Τελικά, για το τρίτο ερώτημα, βρήκαμε τις βέλτιστες παραμέτρους. 
 
-
-
+\section{\textlatin{Beat the Benchmark}}
+Για το ερώτημα αυτό βρήκαμε τις βέλτιστες παραμέτρους \textlatin{kernel='rbf', C=10, gamma=1} για τον αλγόριθμο \textlatin{Support Vector Machines} 
+με τη χρήση της \textlatin{GridSearchCV()}. (μέσω της \textlatin{find\_parameters()} στον κώδικά μας). Η προσθήκη των παραμέτρων αυτών,
+σε συνδυασμό με της εφαρμογής 100 \textlatin{component number} για το \textlatin{LSI}, βλέπουμε πως αποφέρει πολύ καλυτερα αποτελέσματα από όλους τους 
+υπόλοιπους αλγορίθμους που έχουμε δοκιμάσει ως τώρα. 
 
 
 
