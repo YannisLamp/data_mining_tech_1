@@ -105,8 +105,8 @@ def main():
     content = list(train_data.Content)
     test_titles = list(test_data.Title)
     test_content = list(test_data.Content)
-    data_lsi = make_lsi(content, titles, 300)
-    test_data_lsi = make_lsi(test_content, test_titles, 300)
+    data_lsi = make_lsi(content, titles, 50)
+    test_data_lsi = make_lsi(test_content, test_titles, 50)
 
     #assign to each category an int and parse all dataset categories as ints
     categories = ["Politics", "Film", "Football", "Business", "Technology"]
@@ -120,8 +120,7 @@ def main():
     algorithms = [
     MultinomialNB(),
     RandomForestClassifier(n_estimators=6),
-    svm.SVC(kernel='rbf', C=10, gamma=1, probability=True)] #put parameters here
-    #svm.SVC()]
+    svm.SVC()]
 
 
     #find_parameters(svm.SVC(), data_lsi, data_cat)
@@ -158,7 +157,7 @@ def main():
 
     my_method.fit(data_lsi, data_cat)
     my_predict = my_method.predict(test_data_lsi)
-    predictions = [[test_ids[i], categories[pred[i]]] for i in range(len(test_ids))]
+    predictions = [[test_ids[i], categories[mypredict[i]]] for i in range(len(test_ids))]
 
 
     train_data_frame = pd.DataFrame(np.array(stat_array))
