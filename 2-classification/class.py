@@ -35,8 +35,16 @@ def make_lsi(content, titles, no_components):
     lsi_result = np.hstack((reduced_titles, reduced_content))
     return lsi_result
 
-def find_parameters():
-    pass
+def find_parameters(classifier, data_lsi, data_cat): 
+    Cs = [0.01, 0.1, 1, 10, 100]
+    gammas = [0.001, 0.01, 0.1, 1]
+    kernel = ['rbf', 'linear']
+    param_grid = {'C': Cs, 'gamma': gammas, 'kernel': kernel}
+
+    grid = GridSearchCV(classifier, param_grid, cv=10)
+    grid.fit(data_lsi, data_cat)
+    print(grid.best_params_)
+    # after GridSearchCV with 2 option in kernel {'linear','rbf'} my parameters now are {'C': 10, 'gamma': 1, 'kernel': 'rbf'}
 
 #get the statistics of a clasification
 def get_statistics(classifier, data_lsi, data_cat, validation):
@@ -75,7 +83,7 @@ def nearest_neighbor_validation(k, data_lsi, data_cat, validation):
     statistics = [[] for i in range(4)]
     mean_statistics = [0 for i in range(4)]
     for train_index, test_index in validation.split(data_lsi, data_cat):
-        print "iteration"
+        print "iteration" 
         X_train, X_test = data_lsi[train_index], data_lsi[test_index]
         y_train, y_test = data_cat[train_index], data_cat[test_index]
         cat_prediction = find_k_nearest(k, X_train, X_test, y_train)
@@ -112,8 +120,12 @@ def main():
     algorithms = [
     MultinomialNB(),
     RandomForestClassifier(n_estimators=6),
-    svm.SVC(kernel='rbf', C=10, gamma=1, probability=True)] #put parameters here
+    #svm.SVC(kernel='rbf', C=10, gamma=1, probability=True)] #put parameters here
+    svm.SVC()]
 
+
+    find_parameters((svm.SVC(), data_lsi, data_cat)
+    
     validation = KFold(n_splits=10)
     stat_array = [[] for i in range(4)]
 
